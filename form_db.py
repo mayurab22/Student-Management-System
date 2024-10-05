@@ -40,7 +40,7 @@ def insert_student(name, age, grade, bio):
 # Function to fetch all students from the database
 def fetch_all_students():
     conn = get_db_connection()
-    students = conn.execute('SELECT * FROM students').fetchall()
+    students = conn.execute('SELECT * FROM students ORDER BY grade ASC').fetchall()
     print("Fetched successful")
     conn.close()
     return students
