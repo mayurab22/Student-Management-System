@@ -1,7 +1,7 @@
 #Import necessary libraries and functions from Flask and other modules
 from flask import Flask, render_template, request, redirect, url_for, flash
 import auth
-from form_db import insert_student,fetch_all_students,fetch_student_by_id,update_student,delete_student
+from form_db import insert_student,fetch_all_students,fetch_student_by_id,update_student,delete_student,student_exists
 
 #Flask constructor to create an instance of the Flask application
 app = Flask(__name__)
@@ -60,25 +60,35 @@ def addData():
 @app.route('/addData', methods=['POST'])
 def student_form():
     if request.method == 'POST':
-        try:
-            # Get the form data for name, age, grade, and bio
-            name = request.form['name']
-            age = request.form['age']
-            grade = request.form['grade']
-            bio = request.form['bio']
+        
+        # Get the form data for name, age, grade, and bio
+        name = request.form['name']
+        age = request.form['age']
+        grade = request.form['grade']
+        bio = request.form['bio']
 
-            # Validate form inputs
-            if not name or not age or not grade or not bio:
-                flash('Please fill out all required fields.', 'error')
+        # Check if the name already exists (unique constraint)
+        if student_exists(name):
+            flash('Error: A student with this name already exists. Please choose a different name.', 'error')
+            return redirect(url_for('addData'))
+        
+        # Simple validation checks
+        if not name:
+            flash('Name is required!', 'error')
+        elif not age.isdigit() or int(age) < 5:
+            flash('Age must be a number and at least 5.', 'error')
+        elif not grade or grade not in ['A', 'B', 'C', 'D', 'E', 'F']:
+            flash('Grade must be one of A, B, C, D, E, or F.', 'error')
+        elif not bio:
+            flash('Bio is required!', 'error')
+        else:
+            if insert_student(name, int(age), grade, bio):
+                flash('Student record added successfully!','success')
             else:
-                if insert_student(name, int(age), grade, bio):
-                    flash('Student record added successfully!', category='success')
-                else:
-                    flash('A student with this name already exists.', category='error')
-        except:
-            msg = "Error in the INSERT"
-            flash(msg, 'error')
-            return render_template('addData.html')
+                flash('A student with this name already exists.', category='error')
+            return redirect('/addData')
+        
+    return render_template('addData.html')
 
 # Route to view all student records from the database
 @app.route('/view')
