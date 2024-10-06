@@ -2,6 +2,9 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import auth
 from form_db import insert_student,fetch_all_students,fetch_student_by_id,update_student,delete_student,student_exists
+# from werkzeug.utils import secure_filename
+# from highestgrade import read_student_csv,allowed_file,find_highest_grade_students,calculate_average_grade
+# import os
 
 #Flask constructor to create an instance of the Flask application
 app = Flask(__name__)
@@ -27,7 +30,7 @@ def login():
     
     # Check if the user is authenticated using the auth module
     if auth.authenticate(username, password):
-        flash(f"Welcome, {username}!")
+        #flash(f"Welcome, {username}!")
         return render_template('home.html')
     else:
         flash('Invalid username or password. Please try again.')
@@ -82,11 +85,10 @@ def student_form():
         elif not bio:
             flash('Bio is required!', 'error')
         else:
-            if insert_student(name, int(age), grade, bio):
-                flash('Student record added successfully!','success')
-            else:
-                flash('A student with this name already exists.', category='error')
+            insert_student(name, int(age), grade, bio)
+            flash('Student record added successfully!','success')
             return redirect('/addData')
+            
         
     return render_template('addData.html')
 
@@ -118,6 +120,10 @@ def delete_student_route(id):
     delete_student(id)
     flash('Student record deleted successfully!', 'success')
     return redirect(url_for('view'))
+
+@app.route('/logout')
+def logout():
+    return render_template('logout.html')
 
 # Main driver function to run the Flask app, with debug mode enabled to show errors in development
 if __name__ == '__main__':
