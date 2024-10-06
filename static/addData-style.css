@@ -1,20 +1,25 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: tan;
-  }
-  
-  .title{
-    margin-top: 0;
-  }
-  .hero-title{
-    text-align: center;
-    margin-top: 20px;
-    color: #fff;
-    font-size: 60px;
-  }
+  font-family: Arial, sans-serif;
+  background-color: tan;
+}
+
+.title{
+  margin-top: 0;
+}
+.hero-title{
+  text-align: center;
+  margin-top: 20px;
+  color: #fff;
+  font-size: 60px;
+}
 
 .alert{
-    position: absolute;
-    margin-top: 40px;
+  position: absolute;
+  margin-top: 40px;
 }
-  
+
+.sort-title{
+  text-align: center;
+  margin-top: 20px;
+  color: #fff;
+}
