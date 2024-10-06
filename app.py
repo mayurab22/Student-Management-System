@@ -92,9 +92,12 @@ def student_form():
 # Route to view all student records from the database
 @app.route('/view')
 def view():
-    students,average_grade = fetch_all_students()  # Fetch data from the database
-    return render_template('view.html', students=students,average_grade=average_grade)
-
+    try:
+        students, average_grade = fetch_all_students()  # Fetch data and average grade from the database
+        return render_template('view.html', students=students, average_grade=average_grade)
+    except Exception as e:
+        return f"An error occurred while fetching data: PLEASE INSERT THE DATA FIRST", 500
+        
 # Route to edit student data
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_student(id):
