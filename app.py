@@ -2,9 +2,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import auth
 from form_db import insert_student,fetch_all_students,fetch_student_by_id,update_student,delete_student,student_exists
-# from werkzeug.utils import secure_filename
-# from highestgrade import read_student_csv,allowed_file,find_highest_grade_students,calculate_average_grade
-# import os
 
 #Flask constructor to create an instance of the Flask application
 app = Flask(__name__)
@@ -95,8 +92,8 @@ def student_form():
 # Route to view all student records from the database
 @app.route('/view')
 def view():
-    students = fetch_all_students()  # Fetch data from the database
-    return render_template('view.html', students=students)
+    students,average_grade = fetch_all_students()  # Fetch data from the database
+    return render_template('view.html', students=students,average_grade=average_grade)
 
 # Route to edit student data
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
