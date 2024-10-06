@@ -118,6 +118,7 @@ def delete_student_route(id):
     flash('Student record deleted successfully!', 'success')
     return redirect(url_for('view'))
 
+#Route for logout page
 @app.route('/logout')
 def logout():
     return render_template('logout.html')
