@@ -1,3 +1,4 @@
+#Import necessary libraries and functions
 import sqlite3
 
 # Function to create a connection to the database
@@ -37,13 +38,34 @@ def insert_student(name, age, grade, bio):
     conn.commit()
     conn.close()
 
+# Define a dictionary to map grades to numerical values for comparison
+grade_to_value = {
+    'A': 6,
+    'B': 5,
+    'C': 4,
+    'D': 3,
+    'E': 2,
+    'F': 1
+}
+
+value_to_grade = {v: k for k, v in grade_to_value.items()}  # Reverse mapping from score to grade
+
 # Function to fetch all students from the database
 def fetch_all_students():
     conn = get_db_connection()
     students = conn.execute('SELECT * FROM students ORDER BY grade ASC').fetchall()
-    print("Fetched successful")
+    if not students:
+        return None, None
+
+    # Calculate the average grade based on scores
+    total_score = sum(grade_to_value[student['grade']] for student in students)
+    average_score = total_score / len(students)
+
+    # Convert the average score back to a letter grade
+    average_grade = value_to_grade[round(average_score)]
+
     conn.close()
-    return students
+    return students,average_grade
 
 # Function to update student data in the table by ID
 def update_student(student_id, name, age, grade, bio):
