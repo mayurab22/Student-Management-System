@@ -94,6 +94,8 @@ def student_form():
 def view():
     try:
         students, average_grade = fetch_all_students()  # Fetch data and average grade from the database
+        if not students:
+            return render_template('view.html')
         return render_template('view.html', students=students, average_grade=average_grade)
     except Exception as e:
         return f"An error occurred while fetching data: PLEASE INSERT THE DATA FIRST", 500
