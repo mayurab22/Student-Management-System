@@ -81,7 +81,12 @@ $ python  CSV_file_generator.py
 ```
 Run file
 ```
-$ python  highest_and_average_grade.py
+$ python  hi
+
+
+
+ghest_and_average_grade.py
 ```
 ##Working Demo Video
-<!-- Failed to upload "Web demo.mp4" -->
+https://github.com/user-attachments/assets/34b3d87a-97c3-4577-8ace-c0bebfb963e8
+
