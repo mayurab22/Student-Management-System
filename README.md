@@ -88,5 +88,5 @@ $ python  hi
 ghest_and_average_grade.py
 ```
 ##Working Demo Video
-https://github.com/user-attachments/assets/34b3d87a-97c3-4577-8ace-c0bebfb963e8
+https://github.com/user-attachments/assets/7d1231fb-d685-4788-8a7a-6f6614991b66
 
